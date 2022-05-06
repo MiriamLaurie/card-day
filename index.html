@@ -1,0 +1,177 @@
+~<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Карта дня</title>
+    <style>
+    @font-face {
+        src: url(https://code.s3.yandex.net/web-code/fonts/SuisseIntl-Book.woff);
+        font-family: 'Suisse';
+        font-weight: normal;
+    }
+    
+    @font-face {
+        src: url(https://code.s3.yandex.net/web-code/fonts/SuisseIntl-Bold.woff
+    );
+        font-family: 'Suisse';
+        font-weight: bold;
+    }
+    
+    html {
+        height: 100%;
+        margin: 0;
+        -webkit-font-smoothing: antialiased;
+    }
+    
+    body {
+        background-color: #323131;
+        color: white;
+        position: relative;
+        max-width: 540px;
+        min-height: 100%;
+        margin: 0 auto;
+        font-family: 'Suisse';
+        box-sizing: border-box;
+        padding: 36px;
+    }
+    
+    .header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+    }
+    
+    .logo {
+        font-weight: bold;
+        font-size: 24px;
+        margin: 0;
+    }
+    
+    .button {
+        width: 130px;
+        height: 40px;
+        padding-top: 10px;
+        box-sizing: border-box;
+        border: 1px solid white;
+        text-align: center;
+        font-size: 14px;
+        cursor: pointer;
+        transition: opacity 0.2s;
+    }
+    
+    .button:hover {
+        opacity: 0.5;
+    }
+    
+    .image {
+        width: 50%;
+        display: block;
+        margin: 20px auto;
+    }
+    
+    .advice {
+        font-size: 34px;
+        line-height: 1.1;
+        margin-bottom: 70px;
+    }
+    
+    .footer {
+        font-size: 16px;
+        margin: 0;
+        position: absolute;
+        bottom: 36px;
+    }
+    </style>
+    <!-- ниже подключили стили для мобильных устройств: в конце урока сможете поделиться проектом в социальных сетях без страха, что на телефоне друга или подруги будет выглядеть некрасиво -->
+    <link rel="stylesheet" href="https://code.s3.yandex.net/web-code/adaptive.css">
+    <link rel="icon" type="image" href="https://code.s3.yandex.net/web-code/js-favicon.ico">
+</head>
+
+<body>
+    <div class="header">
+        <p class="logo">Хочу узнать карту дня!</p>
+        <div class="button">Узнать</div>
+    </div>
+
+    <img class="image" src="https://i.postimg.cc/432N64Q6/png-clipart-computer-icons-question-mark-question-mark-miscellaneous-text.png">
+
+    <div class="advice">
+        <span>Моя карта дня:</span>
+        <span class="phrase"> </span>
+        <img class="cursor" src="https://code.s3.yandex.net/web-code/cursor.gif">
+    </div>
+
+    <!--<p class="footer">© 2020 Сделал Тим Бернерс-Ли</p>-->
+
+    <script src="https://code.s3.yandex.net/web-code/smoothly.js"></script>
+    <script>
+    let phrases = [{
+        text: 'Шут. Карта говорит о начале нового этапа в жизни. Может предупреждать, что какие - то ваши планы не серьезны и не обдуманы.',
+        image: 'https://i.postimg.cc/7Z7Sf0Hv/0-durak.jpg'
+    },
+    {
+        text: 'Маг. Карта говорит о том, что в ситуации надо занять активную позицию, для реализации задуманного достаточно энергии. Карта советует проявить творчество.',
+        image: 'https://i.postimg.cc/7Lk07hh5/maj01.jpg'
+    },
+    {
+        text: 'Жрица. Карта говорит, что в ситуации и проблеме есть секреты, тайны, неизвестные вам. Поэтому вы не можете полностью оценить как на самом деле поступить. Карта советует больше доверять интуиции.',
+        image: 'https://i.postimg.cc/Zqx3LmvV/maj02.jpg'
+    },
+    {
+        text: 'Императрица. Карта говорит о стабильности. О начале новых дел, результат которых будет получен  не скоро.',
+        image: 'https://i.postimg.cc/Jn7X6Fbm/maj03.jpg'
+    },
+    {
+        text: 'Император. Карта говорит о сильной поддержке. В делах советует сначала все взвесить, прежде чем действовать. Успех ждет, если будет дисциплина во всем.',
+        image: 'https://i.postimg.cc/bJ6tKRTn/maj04.jpg'
+    },
+    {
+        text: 'Влюблённые. Карта может говорить о необходимости сделать выбор и принять за него ответственность.Также может говорить о приятных отношениях и удовольствии.',
+        image: 'https://i.postimg.cc/nrgQLcNc/maj06.jpg'
+    },
+    {
+        text: 'Колесница. Карта говорит об активности  и стремительности в делах. Может сулить поездку или путешествие.',
+        image: 'https://i.postimg.cc/RZrH5hcg/maj07.jpg'
+    },
+    {
+        text: 'Сила. Карта говорит о том, что надо сконцентрировать свои усилия. В сложной ситуации верьте в себя. Вам понадобится сила воли. Помните, что все испытания даны вам будут по силам.',
+        image: 'https://i.postimg.cc/xj4m5tqD/maj08.jpg'
+    },
+    {
+        text: 'Отшельник. Карта говорит об одиночестве, больше о душевном. Если вопрос связан с обучением - то, наступает благоприятный период для этого. В решении проблем опирайтесь на прошлый опыт.',
+        image: 'https://i.postimg.cc/X7BCzdyZ/maj09.jpg'
+    },
+    {
+        text: 'Колесо Фортуны. Карта может говорить как о поездках, путешествиях и переменах, но чаще она говорит что началась смена одного цикла на другой и изменения неизбежны.',
+        image: 'https://i.postimg.cc/CxjfF07S/maj10.jpg'
+    }
+];
+
+function getRandomElement(arr) {
+    let randIndex = Math.floor(Math.random() * arr.length);
+    return arr[randIndex];
+}
+
+let button = document.querySelector('.button');
+let phrase = document.querySelector('.phrase');
+let advice = document.querySelector('.advice');
+let image = document.querySelector('.image');
+
+button.addEventListener('click', function () {
+    let randomElement = getRandomElement(phrases);
+    smoothly(phrase, 'textContent', randomElement.text);
+    image.src = randomElement.image;
+
+    if (randomElement.text.length > 40) {
+        advice.style.fontSize = '25px';
+    } else {
+        advice.style.fontSize = '34px';
+    }
+});
+</script>
+</body>
+
+</html>
